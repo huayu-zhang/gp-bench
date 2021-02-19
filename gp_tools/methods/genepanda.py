@@ -132,8 +132,7 @@ class GenePanda:
         return metrics_function(self.results, key)
 
 
-G = nx.fast_gnp_random_graph(1000, 0.05)
-
-gp = GenePanda(spl_dump='test')
-
-gp.setup_spl_matrix(G)
+#
+# G = nx.fast_gnp_random_graph(1000, 0.05)
+# gp = GenePanda(spl_dump='test')
+# gp.setup_spl_matrix(G)

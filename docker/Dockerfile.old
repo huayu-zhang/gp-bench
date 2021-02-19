@@ -1,0 +1,35 @@
+FROM ubuntu:latest
+
+ARG TOOL_NAME=gp-bench
+ARG PATH_CONDA=/home/miniconda
+
+
+# System packages 
+RUN apt-get update && apt-get install -y curl
+
+# Install miniconda to /miniconda
+
+RUN mkdir /home/Downloads \
+  && cd /home/Downloads \
+  && curl -LO http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+  && bash Miniconda3-latest-Linux-x86_64.sh -p $PATH_CONDA -b \
+  && rm Miniconda3-latest-Linux-x86_64.sh
+
+ENV PATH=$PATH_CONDA/bin:${PATH}
+
+# Copy files into the container
+# COPY . /home/$TOOL_NAME/
+
+# Create the conda env
+RUN conda update -y conda \
+  # && cd /home/$TOOL_NAME/ \
+  # && conda env create -f environment.yml \
+  && conda create graph_gp \
+  && conda init 
+
+RUN /bin/bash -c "source /root/.bashrc" \
+  && conda activate graph_gp
+
+
+CMD "/bin/bash"
+

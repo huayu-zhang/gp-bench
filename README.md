@@ -15,7 +15,7 @@ cd graph_gp
 
  create the env
  ```shell script
-conda env create -f enviroment.yml
+conda env create -f env/environment.yml
 ```
 <br/>
 

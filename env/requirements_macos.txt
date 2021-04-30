@@ -1,0 +1,47 @@
+appdirs==1.4.4
+brotlipy==0.7.0
+certifi==2020.6.20
+cffi @ file:///Users/runner/miniforge3/conda-bld/cffi_1613413897768/work
+chardet @ file:///Users/runner/miniforge3/conda-bld/chardet_1610093485994/work
+cryptography @ file:///Users/runner/miniforge3/conda-bld/cryptography_1616851693031/work
+cycler==0.10.0
+datacache==1.1.5
+decorator==4.4.2
+gtfparse==1.2.1
+html5lib @ file:///home/conda/feedstock_root/build_artifacts/html5lib_1592930327044/work
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1593328102638/work
+isodate==0.6.0
+joblib @ file:///home/conda/feedstock_root/build_artifacts/joblib_1612898609989/work
+keepalive @ file:///Users/runner/miniforge3/conda-bld/keepalive_1610116251407/work
+kiwisolver @ file:///opt/concourse/worker/volumes/live/1e6d28e8-da14-4365-7344-567a05db7efc/volume/kiwisolver_1612282399491/work
+matplotlib @ file:///Users/runner/miniforge3/conda-bld/matplotlib-base_1594091703837/work
+memoized-property==1.0.3
+mkl-fft==1.2.0
+mkl-random==1.1.1
+mkl-service==2.3.0
+mock==4.0.3
+networkx @ file:///tmp/build/80754af9/networkx_1598376031484/work
+numpy @ file:///opt/concourse/worker/volumes/live/40d975a3-7e82-44c8-53df-feccdbce8b96/volume/numpy_and_numpy_base_1596233859108/work
+pandas @ file:///opt/concourse/worker/volumes/live/bfd63b8c-6035-4ed3-5bce-5690df409bf9/volume/pandas_1602088141563/work
+progressbar33==2.4
+pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1593275161868/work
+pyensembl==1.9.1
+pyOpenSSL @ file:///home/conda/feedstock_root/build_artifacts/pyopenssl_1608055815057/work
+pyparsing==2.4.7
+PySocks @ file:///Users/runner/miniforge3/conda-bld/pysocks_1610291468418/work
+python-dateutil==2.8.1
+pytz==2020.1
+rdflib @ file:///Users/runner/miniforge3/conda-bld/rdflib_1610581437312/work
+requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1608156231189/work
+scikit-learn==0.22.1
+scipy @ file:///opt/concourse/worker/volumes/live/9698578f-91da-4d5f-6fce-b26b1f42eb5a/volume/scipy_1597686637948/work
+seaborn @ file:///tmp/build/80754af9/seaborn_1600553570093/work
+serializable==0.2.1
+simplejson==3.17.2
+six==1.15.0
+SPARQLWrapper @ file:///Users/runner/miniforge3/conda-bld/sparqlwrapper_1610119062057/work
+tinytimer==0.0.0
+tornado @ file:///Users/runner/miniforge3/conda-bld/tornado_1610094698292/work
+typechecks==0.1.0
+urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1615828766818/work
+webencodings==0.5.1

@@ -6,7 +6,7 @@ import csv
 from scipy import spatial
 
 
-class dgl_ke:
+class DglKE:
 
     algorithm_name = 'KGEmbedding'
 
@@ -15,28 +15,31 @@ class dgl_ke:
         return 1 - spatial.distance.cosine(v1, v2)
 
     def __init__(self,
-                 params = {
-                    'dataset' : 'PPI_KE',
-                    'data_path' : './ke_train/',
-                    'data_files' : 'train.tsv valid.tsv test.tsv',
-                    'format' : 'raw_udd_htr',
-                    'model_name' : 'TransE_l2',
-                    'batch_size' : 2048,
-                    'neg_sample_size' : 256,
-                    'hidden_dim' : 400,
-                    'gamma' : 12,
-                    'lr' : 0.1,
-                    'max_step' : 100000,
-                    'log_interval' : 1000,
-                    'batch_size_eval' : 16,
-                    'regularization_coef' : 1.00E-07,
-                    'neg_sample_size_eval' : 10000},
-                 emb_path = './ckpts/',
-                 delimiter = '\t',
+                 params=None,
+                 emb_path='./ckpts/',
+                 delimiter='\t',
                  protein_identifier='ENS',
-                 entity_file = None,
-                 relation_file = None
+                 entity_file=None,
+                 relation_file=None
                  ):
+
+        if params is None:
+            params = {
+                'dataset': 'PPI_KE',
+                'data_path': './ke_train/',
+                'data_files': 'train.tsv valid.tsv test.tsv',
+                'format': 'raw_udd_htr',
+                'model_name': 'TransE_l2',
+                'batch_size': 2048,
+                'neg_sample_size': 256,
+                'hidden_dim': 400,
+                'gamma': 12,
+                'lr': 0.1,
+                'max_step': 100000,
+                'log_interval': 1000,
+                'batch_size_eval': 16,
+                'regularization_coef': 1.00E-07,
+                'neg_sample_size_eval': 10000}
 
         self.params = params
         self.emb_path = emb_path
@@ -54,13 +57,13 @@ class dgl_ke:
         self.run_id = -1
 
     def copy(self):
-        return dgl_ke(params=self.params,
-                      protein_identifier=self.protein_identifier)
+        return DglKE(params=self.params,
+                     protein_identifier=self.protein_identifier)
 
     def get_params(self):
         return self.params
 
-    def set_params(self, params={}):
+    def set_params(self, params=None):
         self.params = params
 
     def kge_id_mapping(self, seed_nodes):
@@ -100,9 +103,9 @@ class dgl_ke:
         triples = list(nx.generate_edgelist(G, delimiter=self.delimiter))
         num_triples = len(triples)
 
-        #split into train, validate & test sets and save
+        # split into train, validate & test sets and save
         idx = np.arange(num_triples)
-        np.random.shuffle (idx)
+        np.random.shuffle(idx)
 
         train_count = int(num_triples * 0.9)
         valid_count = int(num_triples * 0.05)
@@ -110,38 +113,39 @@ class dgl_ke:
         valid_set = idx[train_count:train_count+valid_count].tolist()
         test_set = idx[train_count+valid_count:].tolist()
 
-        with open (os.path.join(self.params['data_path'], self.params['data_files'].split(" ")[0]), 'w+') as f:
+        with open(os.path.join(self.params['data_path'], self.params['data_files'].split(" ")[0]), 'w+') as f:
             for id in train_set:
-                f.writelines(triples[id]+"\n")
+                f.writelines(triples[id] + "\n")
 
-        with open (os.path.join(self.params['data_path'], self.params['data_files'].split(" ")[1]), 'w+') as f:
+        with open(os.path.join(self.params['data_path'], self.params['data_files'].split(" ")[1]), 'w+') as f:
             for id in valid_set:
-                f.writelines(triples[id]+"\n")
+                f.writelines(triples[id] + "\n")
 
-        with open (os.path.join(self.params['data_path'], self.params['data_files'].split(" ")[2]), 'w+') as f:
+        with open(os.path.join(self.params['data_path'], self.params['data_files'].split(" ")[2]), 'w+') as f:
             for id in test_set:
-                f.writelines(triples[id]+"\n")
+                f.writelines(triples[id] + "\n")
+
         # Here invoke the command line used for running the algorithm
         self.run_id += 1
         os.system('dglke_train --dataset {} --data_path {} --data_files {} --format "{}" --model_name {} --batch_size {} \
         --neg_sample_size {} --hidden_dim {} --gamma {} --lr {} --max_step {} --log_interval {} --batch_size_eval {} -adv \
         --regularization_coef {} --test --num_thread 1 --gpu 0 --num_proc 0 --neg_sample_size_eval {} '.format(*list(self.params.values())))
 
-        #Training generates the following files: (xxx=<dataset>_<model_name>_)
+        # Training generates the following files: (xxx=<dataset>_<model_name>_)
         # Entity embedding: ./ckpts/<model_name>_<dataset>_<run_id>/xxx_entity.npy
         # Relation embedding: ./ckpts/<model_name>_<dataset>_<run_id>/xxx_relation.npy
         # The entity id mapping, formated in <entity_name> <entity_id> pair: <data_path>/entities.tsv
         # The relation id mapping, formated in <relation_name> <relation_id> pair: <data_path>/relations.tsv
 
-        #if self.entity_file == None:
+        # if self.entity_file == None:
         self.entity_file = os.path.join(self.params['data_path'], "entities.tsv")
-        #if self.relation_file == None:
+        # if self.relation_file == None:
         self.relation_file = os.path.join(self.params['data_path'], "relations.tsv")
 
         self.node_emb = os.path.join(self.emb_path, self.params['model_name']+"_"+self.params['dataset']+"_"+str(self.run_id)+"/"+self.params['dataset']+"_"+self.params['model_name']+"_entity.npy")
         self.relation_emb = os.path.join(self.emb_path, self.params['model_name']+"_"+self.params['dataset']+"_"+str(self.run_id)+"/"+self.params['dataset']+"_"+self.params['model_name']+"_relation.npy")
 
-        #create mapping dictionaries to KGE ids assigned by training algorithm
+        # create mapping dictionaries to KGE ids assigned by training algorithm
         self.kge_id_mapping(seed_nodes)
 
         # Some process here to convert algorithm output to dict of embeddings {node1: v1, node2: v2...}

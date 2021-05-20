@@ -13,7 +13,7 @@ class RandomWalk:
                  gamma=0.5,
                  tol=1e-8,
                  max_iter=100,
-                 protein_identifier='ENS'
+                 protein_identifier=None
                  ):
         self.gamma = gamma
         self.tol = tol
@@ -78,8 +78,11 @@ class RandomWalk:
         for key, value in zip(self.node_init_values.keys(), pt):
             self.node_final_values[key] = value
 
-        self.results = {key: self.node_final_values[key]
-                        for key in self.node_final_values if self.protein_identifier in key}
+        if self.protein_identifier is None:
+            self.results = self.node_final_values
+        else:
+            self.results = {key: self.node_final_values[key]
+                            for key in self.node_final_values if self.protein_identifier in key}
 
     def get_results_df(self, sorting=True, column_name='rw_value'):
         results_df = pd.DataFrame.from_dict(self.results, orient='index')

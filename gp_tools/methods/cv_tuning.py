@@ -174,6 +174,7 @@ class LOOCV:
         self.cv_node_list = None
         self.results = None
         self.full_results = None
+        self.run_id = -1
 
     def get_cv_params(self):
         params = {
@@ -199,14 +200,21 @@ class LOOCV:
 
     def _cv_core(self, G, train, test, name_batch, index_batch):
         algorithm = copy.deepcopy(self.base_algorithm)
+        algorithm.run_id = self.run_id
 
         if G.has_edge(test[0], '$$$target_node'):
             G_temp = G.copy()
             G_temp.remove_edge(test[0], '$$$target_node')
-            algorithm.run(G_temp, train)
+            if algorithm.algorithm_name == 'KGEmbedding':
+                algorithm.run(G_temp, seed_nodes=train, cv=name_batch)
+            else:
+                algorithm.run(G_temp, train)
             print('Edge %s - %s removed to avoid data leaking' % (test[0], '$$$target_node'), end='\n')
         else:
-            algorithm.run(G, train)
+            if algorithm.algorithm_name == 'KGEmbedding':
+                algorithm.run(G, seed_nodes=train, cv=name_batch)
+            else:
+                algorithm.run(G, train)
         result_metrics = self.metrics_function(algorithm.results, test)
         result_df = algorithm.get_results_df(sorting=False, column_name='_'.join([self.metrics_name, name_batch]))
 
@@ -225,6 +233,7 @@ class LOOCV:
             results = []
             for train, test, name_batch, index_batch in self.cv_node_list:
                 results.append(self._cv_core(G, train, test, name_batch, index_batch))
+                self.run_id +=1
         else:
             if self.n_jobs > len(os.sched_getaffinity(0)):
                 self.n_jobs = len(os.sched_getaffinity(0))
@@ -344,4 +353,3 @@ class GridTuneCV:
 
     def best_params(self):
         return self._tune_dicts[np.argmin(self.metrics)]
-

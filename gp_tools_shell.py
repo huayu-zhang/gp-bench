@@ -174,7 +174,10 @@ def main():
             print('Method parameters loaded %s' % params_file, end='\n')
             print('Parameters are:', end='\n')
             print(params, end='\n')
-            algorithm.set_params(**params)
+            if algorithm.algorithm_name == 'KGEmbedding':
+                algorithm.set_params(params)
+            else:
+                algorithm.set_params(**params)
 
             with open(params_save_file, 'w') as f:
                 f.write(json.dumps(algorithm.get_params()))

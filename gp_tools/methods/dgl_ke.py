@@ -79,8 +79,8 @@ class dgl_ke:
         for seed in seed_nodes:
             try:
                 self.seed2id[seed] = self.entity2id[seed]
-            except:
-                self.seed2id[seed] = None
+            except Exception:
+                pass
 
     def run(self, G,
             seed_nodes=None, cv=None):

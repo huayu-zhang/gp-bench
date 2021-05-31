@@ -186,7 +186,7 @@ class Node2Vec:
                  window_embedding=10,
                  n_jobs=None,
                  epoch_embeddings=1,
-                 protein_identifier='ENS',
+                 protein_identifier=None,
                  is_directed=False,
                  walk_path=None,
                  vector_path=None):
@@ -310,8 +310,13 @@ class Node2Vec:
         df_sim['max_sim'] = [np.max(row[1:]) for row in df_sim.itertuples()]
 
         self.df_sim = df_sim
-        self.results = {key: value
-                        for key, value in zip(G.nodes, self.df_sim.max_sim) if self.protein_identifier in key}
+
+        if self.protein_identifier is None:
+            self.results = {key: value
+                            for key, value in zip(G.nodes, self.df_sim.max_sim)}
+        else:
+            self.results = {key: value
+                            for key, value in zip(G.nodes, self.df_sim.max_sim) if self.protein_identifier in key}
 
     def get_results_df(self, sorting=True, column_name='max_sim'):
         results_df = pd.DataFrame.from_dict(self.results, orient='index')

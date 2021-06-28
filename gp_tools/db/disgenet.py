@@ -76,9 +76,14 @@ class DisGeNET_GDA:
                      edge_type='GDA_DisGeNet',
                      weight=1):
 
-        self.edge_df = self.data_filtered[[source, target]].copy()
-        self.edge_df.dropna(inplace=True)
-        self.edge_df['type'] = edge_type
+        if edge_type in self.data_filtered.columns:
+            self.edge_df = self.data_filtered[[source, target, edge_type]].copy()
+            self.edge_df.dropna(inplace=True)
+        else:
+            self.edge_df = self.data_filtered[[source, target]].copy()
+            self.edge_df.dropna(inplace=True)
+            self.edge_df['type'] = edge_type
+            
         self.edge_df['weight'] = weight
         self.utilities = EdgeDfUtilities(edge_df=self.edge_df)
 
@@ -130,7 +135,7 @@ class DisGeNET_sqlite:
         self.cur = self.conn.cursor()
         self.cur.execute(
             """
-            PRAGMA table_info('%s')        
+            PRAGMA table_info('%s')
             """ % table_name
         )
         column_names = [list(name)[1] for name in self.cur.fetchall()]

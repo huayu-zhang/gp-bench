@@ -346,12 +346,16 @@ class GraphMetrics:
 class ModelMetrics:
 
     @staticmethod
-    def rank(results, keys=None):
+    def rank(results, keys=None, identifier=None):
         """
         :param results: In the form of {node1: value1, ...}
         :param keys: ['node1', ...]
+        :param identifier: String by which to select specific nodes to be included in ranking (e.g. 'ENS' for genes)
         :return: {node1: rank1, ...]
         """
+        if identifier != None:
+            results = {k: v for k, v in results.items() if identifier in k}
+            
         results_df = pd.DataFrame.from_dict(results, orient='index')
         results_df.columns = ['value']
         results_df['ranking'] = results_df.value.rank(ascending=False)

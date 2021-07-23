@@ -56,28 +56,31 @@ class RandomWalk:
             self.node_init_values = init_value_by_seed(G, seed_nodes)
 
         else:
-            self.node_init_values = init_value_by_seed(G, G.nodes)
+            self.node_init_values = init_value_by_seed(G, list(G.nodes))
 
-        self.node_final_values = self.node_init_values.copy()
+        self.node_final_values = nx.pagerank(G=G, alpha=self.gamma, personalization=self.node_init_values,
+                                             nstart=self.node_init_values, max_iter=self.max_iter)
 
-        p0 = np.array([*self.node_init_values.values()])
-        W_norm = normalize(nx.adjacency_matrix(G), norm='l1', axis=0).toarray()
-        residue = 1
-        n_iter = 0
-        pt = p0.copy()
-
-        while (residue > self.tol) & (n_iter <= self.max_iter):
-            pt_minus = pt.copy()
-            pt = (1 - self.gamma) * np.matmul(W_norm, pt_minus) + self.gamma * p0
-            residue = np.sqrt(np.sum((pt - pt_minus)**2))
-            n_iter += 1
-
-        if n_iter >= self.max_iter:
-            Warning("Algorithm has not converged!")
-
-        for key, value in zip(self.node_init_values.keys(), pt):
-            self.node_final_values[key] = value
-
+        # self.node_final_values = self.node_init_values.copy()
+        #
+        # p0 = np.array([*self.node_init_values.values()])
+        # W_norm = normalize(nx.adjacency_matrix(G).transpose(), norm='l1', axis=0).toarray()
+        # residue = 1
+        # n_iter = 0
+        # pt = p0.copy()
+        #
+        # while (residue > self.tol) & (n_iter <= self.max_iter):
+        #     pt_minus = pt.copy()
+        #     pt = (1 - self.gamma) * np.matmul(W_norm, pt_minus) + self.gamma * p0
+        #     residue = np.sqrt(np.sum((pt - pt_minus)**2))
+        #     n_iter += 1
+        #
+        # if n_iter >= self.max_iter:
+        #     Warning("Algorithm has not converged!")
+        #
+        # for key, value in zip(self.node_init_values.keys(), pt):
+        #     self.node_final_values[key] = value
+        #
         if self.protein_identifier is None:
             self.results = self.node_final_values
         else:

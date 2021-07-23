@@ -1,16 +1,31 @@
 appdirs==1.4.4
+boto==2.49.0
+boto3 @ file:///tmp/build/80754af9/boto3_1626104930798/work
+botocore @ file:///tmp/build/80754af9/botocore_1626066382556/work
 brotlipy==0.7.0
-certifi==2020.6.20
+cachetools @ file:///tmp/build/80754af9/cachetools_1619597386817/work
+certifi==2021.5.30
 cffi @ file:///Users/runner/miniforge3/conda-bld/cffi_1613413897768/work
 chardet @ file:///Users/runner/miniforge3/conda-bld/chardet_1610093485994/work
 cryptography @ file:///Users/runner/miniforge3/conda-bld/cryptography_1616851693031/work
 cycler==0.10.0
 datacache==1.1.5
 decorator==4.4.2
+dgl==0.6.1
+dglke==0.1.2
+gensim==3.8.0
+google-api-core @ file:///C:/ci/google-api-core-split_1613980333946/work
+google-auth @ file:///tmp/build/80754af9/google-auth_1600960338579/work
+google-cloud-core @ file:///tmp/build/80754af9/google-cloud-core_1613414810663/work
+google-cloud-storage @ file:///tmp/build/80754af9/google-cloud-storage_1625077524075/work
+google-crc32c @ file:///opt/concourse/worker/volumes/live/0de1005b-9091-4e72-56c6-7ebd9557635b/volume/google-crc32c_1612242925405/work
+google-resumable-media @ file:///tmp/build/80754af9/google-resumable-media_1624367812531/work
+googleapis-common-protos @ file:///opt/concourse/worker/volumes/live/a9866c56-bd78-47e9-7316-430b13968ffd/volume/googleapis-common-protos-feedstock_1617957629478/work
 gtfparse==1.2.1
 html5lib @ file:///home/conda/feedstock_root/build_artifacts/html5lib_1592930327044/work
 idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1593328102638/work
 isodate==0.6.0
+jmespath @ file:///tmp/build/80754af9/jmespath_1594304593830/work
 joblib @ file:///home/conda/feedstock_root/build_artifacts/joblib_1612898609989/work
 keepalive @ file:///Users/runner/miniforge3/conda-bld/keepalive_1610116251407/work
 kiwisolver @ file:///opt/concourse/worker/volumes/live/1e6d28e8-da14-4365-7344-567a05db7efc/volume/kiwisolver_1612282399491/work
@@ -20,10 +35,14 @@ mkl-fft==1.2.0
 mkl-random==1.1.1
 mkl-service==2.3.0
 mock==4.0.3
+multidict @ file:///opt/concourse/worker/volumes/live/916fad11-7ad6-4d5b-6bed-62dd814c4c78/volume/multidict_1607367774261/work
 networkx @ file:///tmp/build/80754af9/networkx_1598376031484/work
 numpy @ file:///opt/concourse/worker/volumes/live/40d975a3-7e82-44c8-53df-feccdbce8b96/volume/numpy_and_numpy_base_1596233859108/work
 pandas @ file:///opt/concourse/worker/volumes/live/bfd63b8c-6035-4ed3-5bce-5690df409bf9/volume/pandas_1602088141563/work
 progressbar33==2.4
+protobuf==3.14.0
+pyasn1==0.4.8
+pyasn1-modules==0.2.8
 pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1593275161868/work
 pyensembl==1.9.1
 pyOpenSSL @ file:///home/conda/feedstock_root/build_artifacts/pyopenssl_1608055815057/work
@@ -33,15 +52,21 @@ python-dateutil==2.8.1
 pytz==2020.1
 rdflib @ file:///Users/runner/miniforge3/conda-bld/rdflib_1610581437312/work
 requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1608156231189/work
+rsa @ file:///tmp/build/80754af9/rsa_1614366226499/work
+s3transfer @ file:///tmp/build/80754af9/s3transfer_1623278116614/work
 scikit-learn==0.22.1
 scipy @ file:///opt/concourse/worker/volumes/live/9698578f-91da-4d5f-6fce-b26b1f42eb5a/volume/scipy_1597686637948/work
 seaborn @ file:///tmp/build/80754af9/seaborn_1600553570093/work
 serializable==0.2.1
 simplejson==3.17.2
 six==1.15.0
+smart-open==2.0.0
 SPARQLWrapper @ file:///Users/runner/miniforge3/conda-bld/sparqlwrapper_1610119062057/work
 tinytimer==0.0.0
+torch==1.8.1
 tornado @ file:///Users/runner/miniforge3/conda-bld/tornado_1610094698292/work
 typechecks==0.1.0
+typing-extensions==3.10.0.0
 urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1615828766818/work
 webencodings==0.5.1
+yarl @ file:///opt/concourse/worker/volumes/live/33e35c6f-e0f3-4e8f-41a6-47322106cfc8/volume/yarl_1598045184895/work

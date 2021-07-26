@@ -312,22 +312,12 @@ class Node2Vec:
         df_sim['max_sim'] = [np.max(row[1:]) for row in df_sim.itertuples()]
 
         self.df_sim = df_sim
-
-<<<<<<< HEAD
-        if self.protein_identifier is not None:
-            self.results = {key: value
-                            for key, value in zip(G.nodes, self.df_sim.max_sim) if self.protein_identifier in key}
-        else:
-            self.results = {key: value
-                            for key, value in zip(G.nodes, self.df_sim.max_sim)}
-=======
         if self.protein_identifier is None:
             self.results = {key: value
                             for key, value in zip(G.nodes, self.df_sim.max_sim)}
         else:
             self.results = {key: value
                             for key, value in zip(G.nodes, self.df_sim.max_sim) if self.protein_identifier in key}
->>>>>>> ceb98c35b93023daaffc19d5ecb64d55b53c3e37
 
     def get_results_df(self, sorting=True, column_name='max_sim'):
         results_df = pd.DataFrame.from_dict(self.results, orient='index')

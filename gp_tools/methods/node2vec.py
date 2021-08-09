@@ -281,7 +281,7 @@ class Node2Vec:
             workers=self.n_jobs,
             iter=self.epoch_embeddings)
 
-    def run(self, G, seed_nodes):
+    def run(self, G, seed_nodes=None):
 
         if self.vector_path is not None:
 
@@ -300,24 +300,25 @@ class Node2Vec:
 
             self.learn_embeddings()
 
-        list_of_sim = list()
-        for node in G.nodes:
-            node_sim = list()
-            node_vec = self.embedding_results.wv.get_vector(str(node))
-            for seed_node in seed_nodes:
-                seed_vec = self.embedding_results.wv.get_vector(str(seed_node))
-                node_sim.append(np.inner(node_vec, seed_vec) / (np.linalg.norm(node_vec) * np.linalg.norm(seed_vec)))
-            list_of_sim.append(node_sim)
-        df_sim = pd.DataFrame.from_records(list_of_sim, index=G.nodes, columns=seed_nodes)
-        df_sim['max_sim'] = [np.max(row[1:]) for row in df_sim.itertuples()]
+        if seed_nodes is not None:
+            list_of_sim = list()
+            for node in G.nodes:
+                node_sim = list()
+                node_vec = self.embedding_results.wv.get_vector(str(node))
+                for seed_node in seed_nodes:
+                    seed_vec = self.embedding_results.wv.get_vector(str(seed_node))
+                    node_sim.append(np.inner(node_vec, seed_vec) / (np.linalg.norm(node_vec) * np.linalg.norm(seed_vec)))
+                list_of_sim.append(node_sim)
+            df_sim = pd.DataFrame.from_records(list_of_sim, index=G.nodes, columns=seed_nodes)
+            df_sim['max_sim'] = [np.max(row[1:]) for row in df_sim.itertuples()]
 
-        self.df_sim = df_sim
-        if self.protein_identifier is None:
-            self.results = {key: value
-                            for key, value in zip(G.nodes, self.df_sim.max_sim)}
-        else:
-            self.results = {key: value
-                            for key, value in zip(G.nodes, self.df_sim.max_sim) if self.protein_identifier in key}
+            self.df_sim = df_sim
+            if self.protein_identifier is None:
+                self.results = {key: value
+                                for key, value in zip(G.nodes, self.df_sim.max_sim)}
+            else:
+                self.results = {key: value
+                                for key, value in zip(G.nodes, self.df_sim.max_sim) if self.protein_identifier in key}
 
     def get_results_df(self, sorting=True, column_name='max_sim'):
         results_df = pd.DataFrame.from_dict(self.results, orient='index')
